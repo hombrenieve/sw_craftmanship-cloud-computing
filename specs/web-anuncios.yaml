@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-webapp
+  labels:
+    app: java-webapp
+spec:
+  selector:
+    matchLabels:
+      app: java-webapp
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: java-webapp
+      labels:
+        app: java-webapp
+    spec:
+      containers:
+      - name: java
+        image: codeurjc/java-webapp-bbdd:v2
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: pass
+          - name: MYSQL_DATABASE
+            value: test
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-webapp-db
+  labels:
+    app: java-webapp
+    type: db
+spec:
+  selector:
+    matchLabels:
+      type: db
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: java-webapp-db
+      labels:
+        app: java-webapp
+        type: db
+    spec:
+      containers:
+      - name: database
+        image: mysql:5.6
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: pass
+          - name: MYSQL_DATABASE
+            value: test
+        volumeMounts:
+          - mountPath: "/var/lib/mysql"
+            name: webapp-db-storage
+      volumes:
+        - name: webapp-db-storage
+          persistentVolumeClaim:
+            claimName: webapp-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  labels:
+    app: java-webapp
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+      name: db
+  selector:
+    type: db
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-webapp
+  labels:
+    app: java-webapp
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: java-webapp
+  selector:
+    app: java-webapp
+  type: NodePort
