@@ -93,4 +93,4 @@ spec:
       name: java-webapp
   selector:
     app: java-webapp
-  type: NodePort
+  type: ClusterIP

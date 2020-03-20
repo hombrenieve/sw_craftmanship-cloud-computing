@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress  
+metadata:  
+  name: java-webapp-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:  
+  rules:
+  - host: www.webanuncios.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: java-webapp
+          servicePort: 8080
