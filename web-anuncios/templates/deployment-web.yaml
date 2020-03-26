@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "web-anuncios.fullname" . }}
+  labels:
+{{ include "web-anuncios.labels" . | indent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "web-anuncios.name" . }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "web-anuncios.name" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: {{ .Values.dbRootPassword }}
+          - name: MYSQL_DATABASE
+            value: {{ .Values.dbName }}

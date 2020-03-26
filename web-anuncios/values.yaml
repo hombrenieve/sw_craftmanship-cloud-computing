@@ -1,0 +1,8 @@
+image:
+  repository: codeurjc/java-webapp-bbdd
+  tag: v2
+  pullPolicy: IfNotPresent
+
+dbRootPassword: pass
+dbName: test
+
