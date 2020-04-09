@@ -1,7 +1,9 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: webapp-volume
+  name: {{ include "web-anuncios.fullname" . }}-db-persistent-volume
+  labels:
+{{ include "web-anuncios.labels" . | indent 4 }}
 spec:
   storageClassName: manual
   capacity:

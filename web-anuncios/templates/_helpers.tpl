@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "web-anuncios.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+pablorebaquediaz-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -42,15 +42,4 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "web-anuncios.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "web-anuncios.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
 {{- end -}}

@@ -1,8 +1,24 @@
-image:
-  repository: codeurjc/java-webapp-bbdd
-  tag: v2
-  pullPolicy: IfNotPresent
+webAnuncios:
+  image:
+    repository: codeurjc/java-webapp-bbdd
+    tag: v2
+  service:
+    name: web
+    port: 8080
+  ingress:
+    path: /anuncios
+    host: www.webanuncios.com
 
-dbRootPassword: pass
-dbName: test
+db:
+  image:
+    repository: mysql
+    tag: 5.6
+  rootPassword: pass
+  name: test
+  service:
+    name: db
+    port: 3306
+  volumeName: db-storage
+  pvc: db-pvc
+
 

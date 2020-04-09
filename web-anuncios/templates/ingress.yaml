@@ -2,14 +2,16 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress  
 metadata:  
   name: {{ include "web-anuncios.fullname" . }}-ingress
+  labels:
+{{ include "web-anuncios.labels" . | indent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: "/$2"
 spec:  
   rules:
-  - host: www.webanuncios.com
+  - host: {{ .Values.webAnuncios.ingress.host }}
     http:
       paths:
-      - path: /anuncios(/|$)(.*)
+      - path: {{ .Values.webAnuncios.ingress.path }}(/|$)(.*)
         backend:
-          serviceName: {{ include "web-anuncios.fullname" . }}
-          servicePort: 8080
+          serviceName: {{ include "web-anuncios.fullname" . }}-service
+          servicePort: {{ .Values.webAnuncios.service.port }}

@@ -1,7 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: webapp-pvc
+  name: {{ include "web-anuncios.fullname" . }}-{{ .Values.db.pvc }}
+  labels:
+{{ include "web-anuncios.labels" . | indent 4 }}
 spec:
   storageClassName: manual
   accessModes:

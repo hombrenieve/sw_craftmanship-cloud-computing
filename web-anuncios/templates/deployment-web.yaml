@@ -5,9 +5,6 @@ metadata:
   labels:
 {{ include "web-anuncios.labels" . | indent 4 }}
 spec:
-  replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "web-anuncios.name" . }}
@@ -18,9 +15,9 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.webAnuncios.image.repository }}:{{ .Values.webAnuncios.image.tag }}"
           env:
           - name: MYSQL_ROOT_PASSWORD
-            value: {{ .Values.dbRootPassword }}
+            value: {{ .Values.db.rootPassword }}
           - name: MYSQL_DATABASE
-            value: {{ .Values.dbName }}
+            value: {{ .Values.db.name }}
