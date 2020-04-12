@@ -1,0 +1,18 @@
+Desplegar web-anuncios
+
+Pre-requisitos:
+    * Minikube
+    * Helm 2 y tiller activado
+    * Ingress plugin activado
+
+Pasos:
+    1. Configurar en el fichero values.yaml los parámetros del ingress: nombre de host y path a registrar
+    2. Definir el nombre del host en el fichero /etc/hosts (o equivalente)
+    3. Deplegar con helm:
+        helm install -n <nombre_despligue> web-anuncios
+    
+Esperar unos segundos y probar que se puede acceder a la aplicacion. Por defecto www.mihost.com/anuncios/ (es importante poner la barra del final
+porque si no el ingress no resuelve correctamente)
+
+Se pueden ver los elementos desplegados con el comando:
+    kubectl get deployment,pods,services,ingress,pvc,pv -l app.kubernetes.io/name=pablorebaquediaz-web-anuncios

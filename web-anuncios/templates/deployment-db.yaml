@@ -4,7 +4,6 @@ metadata:
   name: {{ include "web-anuncios.fullname" . }}-db
   labels:
 {{ include "web-anuncios.labels" . | indent 4 }}
-    type: db
 spec:
   selector:
     matchLabels:

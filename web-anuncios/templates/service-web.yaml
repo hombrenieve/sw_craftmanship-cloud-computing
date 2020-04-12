@@ -13,3 +13,4 @@ spec:
       name: {{ .Values.webAnuncios.service.name }}
   selector:
     app.kubernetes.io/name: {{ include "web-anuncios.name" . }}
+    type: web

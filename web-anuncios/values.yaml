@@ -7,7 +7,7 @@ webAnuncios:
     port: 8080
   ingress:
     path: /anuncios
-    host: www.webanuncios.com
+    host: www.mihost.com
 
 db:
   image:
